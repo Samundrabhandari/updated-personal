@@ -10,9 +10,10 @@ cloudinary.config({
 
 export async function PUT(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    props: { params: Promise<{ id: string }> }
 ) {
     try {
+        const params = await props.params;
         const body = await request.json();
         const { title, tags, isPublic, orderIndex } = body;
 
@@ -35,9 +36,11 @@ export async function PUT(
 
 export async function DELETE(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    props: { params: Promise<{ id: string }> }
 ) {
     try {
+        const params = await props.params;
+
         const item = await prisma.galleryItem.findUnique({
             where: { id: params.id },
         });

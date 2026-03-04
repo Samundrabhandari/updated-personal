@@ -8,6 +8,14 @@ interface UploadWidgetProps {
 }
 
 export default function UploadWidget({ onUploadSuccess, type }: UploadWidgetProps) {
+    if (typeof window === 'undefined' || !process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME) {
+        return (
+            <button className="px-4 py-2 bg-gray-600 text-white rounded-lg font-medium shadow-sm opacity-50 cursor-not-allowed">
+                Configuration Missing
+            </button>
+        );
+    }
+
     return (
         <CldUploadWidget
             signatureEndpoint="/api/upload"
