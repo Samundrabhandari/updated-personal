@@ -1,0 +1,26 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model GalleryItem {
+  id         String   @id @default(cuid())
+  type       String   // "IMAGE" or "VIDEO"
+  title      String
+  tags       String?  // comma separated or JSON array
+  url        String
+  publicId   String   // Cloudinary public ID for deletion
+  createdAt  DateTime @default(now())
+  isPublic   Boolean  @default(true)
+  orderIndex Int      @default(0)
+}
